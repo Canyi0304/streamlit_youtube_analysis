@@ -131,7 +131,12 @@ def display_videos(videos, channel_stats=None):
             duration = format_duration(content_details.get('duration', ''))
             
             if thumbnail_url:
-                st.image(thumbnail_url, use_column_width=True)
+                try:
+                    # Newer Streamlit versions
+                    st.image(thumbnail_url, use_container_width=True)
+                except TypeError:
+                    # Backward compatibility with older versions
+                    st.image(thumbnail_url, use_column_width=True)
                 st.caption(duration)
         
         with col2:
